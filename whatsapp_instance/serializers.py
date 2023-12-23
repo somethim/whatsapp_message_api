@@ -1,15 +1,15 @@
 from rest_framework import serializers
 
-from .models import Clients
+from whatsapp_instance.models import ClientMessage
 
 
-class ClientsSerializer(serializers.ModelSerializer):
+class ClientMessageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Clients
+        model = ClientMessage
         fields = (
             "id",
-            "name",
-            "phone",
-            "email",
+            "client",
+            "message",
+            "date",
         )
-        read_only_fields = ("id",)
+        read_only_fields = ("date", "id")

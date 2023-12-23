@@ -1,12 +1,10 @@
 from django.db import models
 
 
-class Clients(models.Model):
-    name = models.CharField(max_length=200)
-    phone = models.CharField(max_length=200)
-    email = models.CharField(max_length=200)
-
-    company = models.ForeignKey("user_data.Company", on_delete=models.CASCADE)
+class ClientMessage(models.Model):
+    client = models.ForeignKey("user_data.Client", on_delete=models.CASCADE)
+    message = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f"{self.name} - {self.phone} | {self.email}"
+        return f"{self.client.name} - {self.message[:20]} | {self.date}"

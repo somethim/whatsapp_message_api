@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import User
+from .models import Client, User
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -8,4 +8,10 @@ class UserAdmin(admin.ModelAdmin):
         model = User
 
 
+class ClientsAdmin(admin.ModelAdmin):
+    class Meta:
+        model = Client
+
+
 admin.site.register(User, UserAdmin)
+admin.site.register(Client, ClientsAdmin)

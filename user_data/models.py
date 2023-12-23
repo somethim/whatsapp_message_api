@@ -82,3 +82,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self) -> str:
         return f"{self.name} - {self.email} | {self.phone}"
+
+
+class Client(models.Model):
+    name = models.CharField(max_length=200)
+    phone = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+
+    next_meeting_date = models.DateTimeField(default=None, null=True, blank=True)
+
+    company = models.ForeignKey("user_data.Company", on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.name} - {self.phone} | {self.email}"
