@@ -1,0 +1,1 @@
+bash -c "python manage.py create_company_superuser"
