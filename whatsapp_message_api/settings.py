@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "rest_framework",
     # Local Apps
     "user_data",
+    "whatsapp_instance",
 ]
 
 MIDDLEWARE = [

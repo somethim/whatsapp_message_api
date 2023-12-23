@@ -20,7 +20,7 @@ class UserManager(BaseUserManager):
         name: Optional[str] = None,
         password: Optional[str] = None,
     ) -> "User":
-        return self.create_user(
+        return self.create_staff(
             name=name,
             phone=phone,
             email=email,
@@ -36,26 +36,6 @@ class UserManager(BaseUserManager):
         email: str,
         is_superuser: bool = False,
         is_staff: bool = True,
-        is_active: bool = True,
-        name: Optional[str] = None,
-        password: Optional[str] = None,
-    ) -> "User":
-        return self.create_user(
-            name=name,
-            phone=phone,
-            email=email,
-            is_superuser=is_superuser,
-            is_staff=is_staff,
-            is_active=is_active,
-            password=password,
-        )
-
-    def create_user(
-        self,
-        phone: str,
-        email: str,
-        is_superuser: bool = False,
-        is_staff: bool = False,
         is_active: bool = True,
         name: Optional[str] = None,
         password: Optional[str] = None,
@@ -76,7 +56,7 @@ class UserManager(BaseUserManager):
 class Company(models.Model):
     name = models.CharField(max_length=50)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self) -> str:
         return f"{self.name}"
@@ -92,6 +72,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(default=timezone.now)
+
+    company = models.ForeignKey("user_data.Company", on_delete=models.CASCADE)
 
     objects = UserManager()
 
