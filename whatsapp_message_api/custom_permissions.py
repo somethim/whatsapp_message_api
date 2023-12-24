@@ -1,13 +1,15 @@
-from typing import Any
+from typing import Optional
 
-from django.http import HttpRequest
-from rest_framework import permissions
+from django.contrib.auth.models import AnonymousUser
+from rest_framework.permissions import BasePermission
+from rest_framework.request import Request
+from rest_framework.views import APIView
 
 
-class IsSuperUser(permissions.BasePermission):
-    """
-    Global permission check for superuser.
-    """
-
-    def has_permission(self, request: HttpRequest, view: Any) -> bool:
-        return bool(request.user and request.user.is_superuser)
+class IsSuperUser(BasePermission):
+    def has_permission(self, request: Request, view: Optional[APIView]) -> bool:
+        return bool(
+            request.user
+            and not isinstance(request.user, AnonymousUser)
+            and request.user.is_superuser is True
+        )

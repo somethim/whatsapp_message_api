@@ -56,15 +56,13 @@ class UserManager(BaseUserManager):
 class Company(models.Model):
     name = models.CharField(max_length=50)
 
-    created_at = models.DateTimeField(default=timezone.now)
-
     def __str__(self) -> str:
         return f"{self.name}"
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=50, default=None, null=True, blank=True)
-    phone = models.CharField(max_length=50, unique=True)
+    phone_number = models.CharField(max_length=50, unique=True)
     email = models.CharField(max_length=50, unique=True)
 
     is_superuser = models.BooleanField(default=False)
@@ -81,17 +79,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ["name", "phone"]
 
     def __str__(self) -> str:
-        return f"{self.name} - {self.email} | {self.phone}"
+        return f"{self.name} - {self.email} | {self.phone_number}"
 
 
 class Client(models.Model):
     name = models.CharField(max_length=200)
-    phone = models.CharField(max_length=200)
+    phone_number = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
 
     next_meeting_date = models.DateTimeField(default=None, null=True, blank=True)
 
+    message = models.TextField(default=None, null=True, blank=True)
     company = models.ForeignKey("user_data.Company", on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"{self.name} - {self.phone} | {self.email}"
+        return f"{self.name} - {self.phone_number} | {self.email}"

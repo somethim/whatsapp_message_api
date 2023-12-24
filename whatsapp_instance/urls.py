@@ -1,11 +1,8 @@
-from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from whatsapp_instance.views import ClientMessageViewSet
 
 router = DefaultRouter()
-router.register(r"client-messagpipes", ClientMessageViewSet)
+router.register(r"client-message", ClientMessageViewSet, basename="client-message")
 
-urlpatterns = [
-    path("", include(router.urls)),
-]
+urlpatterns = router.urls
